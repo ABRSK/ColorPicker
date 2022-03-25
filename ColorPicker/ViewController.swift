@@ -11,6 +11,8 @@ var colorRedValue: Float = 0
 var colorGreenValue: Float = 0
 var colorBlueValue: Float = 0
 
+let defaultCornerRadius: CGFloat = 15
+
 class ViewController: UIViewController {
     
     @IBOutlet var currentColorView: UIView!
@@ -24,6 +26,7 @@ class ViewController: UIViewController {
     @IBOutlet var colorLabelBlue: UILabel!
     
     @IBOutlet var colorButtonReset: UIButton!
+    @IBOutlet var colorButtonRandom: UIButton!
     
     
     override func viewDidLoad() {
@@ -54,6 +57,11 @@ class ViewController: UIViewController {
         resetColorToDefault()
     }
     
+    @IBAction func colorButtonGenerateRandom() {
+        generateRandomColor()
+        updateCurrentColorView()
+        updateUI()
+    }
     
     
     private func resetColorToDefault() {
@@ -62,14 +70,7 @@ class ViewController: UIViewController {
         colorBlueValue = 0
         
         updateCurrentColorView()
-        
-        colorSliderRed.value = colorRedValue
-        colorSliderGreen.value = colorGreenValue
-        colorSliderBlue.value = colorBlueValue
-        
-        colorLabelRed.text = String(colorRedValue)
-        colorLabelGreen.text = String(colorGreenValue)
-        colorLabelBlue.text = String(colorBlueValue)
+        updateUI()
         
     }
     
@@ -77,36 +78,56 @@ class ViewController: UIViewController {
         currentColorView.backgroundColor  = .init(red: CGFloat(colorRedValue / 255), green: CGFloat(colorGreenValue / 255), blue: CGFloat(colorBlueValue / 255), alpha: 1)
     }
     
+    private func updateUI() {
+        colorSliderRed.value = colorRedValue
+        colorSliderGreen.value = colorGreenValue
+        colorSliderBlue.value = colorBlueValue
+        
+        colorLabelRed.text = String(Int(colorRedValue))
+        colorLabelGreen.text = String(Int(colorGreenValue))
+        colorLabelBlue.text = String(Int(colorBlueValue))
+    }
+    
+    private func generateRandomColor() {
+        colorRedValue = .random(in: 0...255)
+        colorGreenValue = .random(in: 0...255)
+        colorBlueValue = .random(in: 0...255)
+    }
+    
     private func configUI() {
         
-        // Color view
+        // Current color view
         
-        currentColorView.layer.cornerRadius = 15
+        currentColorView.layer.cornerRadius = defaultCornerRadius
+        currentColorView.layer.borderWidth = 1
+        currentColorView.layer.borderColor = UIColor.lightGray.cgColor
+        
         
         // Red slider
         
         colorSliderRed.minimumValue = 0
         colorSliderRed.maximumValue = 255
-        colorSliderRed.minimumTrackTintColor = .red
+        colorSliderRed.minimumTrackTintColor = .red.withAlphaComponent(0.5)
         colorSliderRed.thumbTintColor = .red
         
         // Green slider
         
         colorSliderGreen.minimumValue = 0
         colorSliderGreen.maximumValue = 255
-        colorSliderGreen.minimumTrackTintColor = .green
+        colorSliderGreen.minimumTrackTintColor = .green.withAlphaComponent(0.5)
         colorSliderGreen.thumbTintColor = .green
         
         // Blue slider
         
         colorSliderBlue.minimumValue = 0
         colorSliderBlue.maximumValue = 255
-        colorSliderBlue.minimumTrackTintColor = .blue
+        colorSliderBlue.minimumTrackTintColor = .blue.withAlphaComponent(0.5)
         colorSliderBlue.thumbTintColor = .blue
         
-        // Reset button
+        // Buttons
         
-        colorButtonReset.layer.cornerRadius = 15
+        colorButtonReset.layer.cornerRadius = defaultCornerRadius
+        colorButtonRandom.layer.cornerRadius = defaultCornerRadius
     }
 
 }
