@@ -17,14 +17,17 @@ class ViewController: UIViewController {
     
     @IBOutlet var currentColorView: UIView!
     
+    // Sliders
     @IBOutlet var colorSliderRed: UISlider!
     @IBOutlet var colorSliderGreen: UISlider!
     @IBOutlet var colorSliderBlue: UISlider!
     
+    // Labels
     @IBOutlet var colorLabelRed: UILabel!
     @IBOutlet var colorLabelGreen: UILabel!
     @IBOutlet var colorLabelBlue: UILabel!
     
+    // Buttons
     @IBOutlet var colorButtonReset: UIButton!
     @IBOutlet var colorButtonRandom: UIButton!
     
@@ -55,6 +58,8 @@ class ViewController: UIViewController {
     
     @IBAction func colorButtonResetToDefault() {
         resetColorToDefault()
+        updateCurrentColorView()
+        updateUI()
     }
     
     @IBAction func colorButtonGenerateRandom() {
@@ -68,10 +73,6 @@ class ViewController: UIViewController {
         colorRedValue = 0
         colorGreenValue = 0
         colorBlueValue = 0
-        
-        updateCurrentColorView()
-        updateUI()
-        
     }
     
     private func updateCurrentColorView() {
@@ -79,6 +80,7 @@ class ViewController: UIViewController {
     }
     
     private func updateUI() {
+        
         colorSliderRed.value = colorRedValue
         colorSliderGreen.value = colorGreenValue
         colorSliderBlue.value = colorBlueValue
